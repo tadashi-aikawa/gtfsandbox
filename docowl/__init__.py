@@ -14,6 +14,15 @@ Commands:
 {commands}
 """
 
+_DOC_COMMAND_TMPL_ = """
+Usage:
+  {cli} {command} [<subcommand>] [<args>...]
+  {cli} {command} (-h | --help)
+
+Subcommands:
+{subcommands}
+"""
+
 
 def command_not_found_format(command: str) -> str:
     return f"""
@@ -67,7 +76,17 @@ def run(cli: str, version: str, root: str):
     subcommand: str = main_args.pop('<subcommand>')
     # Show global docs and abort
     if subcommand in ["-h", "--help", None]:
-        print(cmd_module.__doc__.format(cli=cli))
+        command_dir = os.path.abspath(f"{os.path.dirname(__file__)}/../{root}/commands/{command}")
+        subcommands = [f'  {x}          {first_line_in_doc(import_module(root+".commands."+command+"."+x+".main"))}'
+                       for x
+                       in os.listdir(f'{root_dir}/commands/{command}')
+                       if os.path.isdir(f'{root_dir}/commands/{command}/{x}')]
+
+        if subcommands:
+            command_doc = _DOC_COMMAND_TMPL_.format(cli=cli, command=command, subcommands='\n'.join(subcommands))
+            print(command_doc)
+        else:
+            print(cmd_module.__doc__.format(cli=cli))
         sys.exit(0)
 
     try:

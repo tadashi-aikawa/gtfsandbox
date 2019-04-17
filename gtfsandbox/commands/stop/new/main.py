@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-"""
+"""Create stops
+
 Usage:
   {cli} stop new <name>... [-n|--with-nodes]
 

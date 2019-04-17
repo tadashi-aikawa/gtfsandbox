@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-"""
+"""Remove stops
+
 Usage:
   {cli} stop remove <name>... [-n|--with-nodes]
 
