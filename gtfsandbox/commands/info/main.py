@@ -10,13 +10,10 @@ Options:
 """
 from owlmixin import OwlMixin
 
-from gtfsandbox.base import AbstractCmd
+
+class Args(OwlMixin):
+    v: int
 
 
-class Cmd(AbstractCmd):
-    class Args(OwlMixin):
-        v: int
-
-    @classmethod
-    def exec(cls, args: Args):
-        print(args.to_yaml())
+def run(args: Args):
+    print(args.to_yaml())
