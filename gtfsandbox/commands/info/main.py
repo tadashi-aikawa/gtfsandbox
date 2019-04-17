@@ -8,7 +8,7 @@ Options:
   -v                                   Verbose (`-v` or `-vv` or `-vvv`)
   -h --help                            Show this screen.
 """
-from owlmixin import OwlMixin, TList, OwlEnum
+from owlmixin import OwlMixin
 
 from gtfsandbox.base import AbstractCmd
 
