@@ -1,3 +1,4 @@
+import os
 import sys
 from importlib import import_module
 
@@ -30,27 +31,29 @@ Show available subcommands.
 """
 
 
-def run(cli: str, commands: str, version: str, root: str):
+def first_line_in_doc(module) -> str:
+    return module.__doc__.split("\n")[0]
+
+
+def run(cli: str, version: str, root: str):
     """
     :param cli: CLI file name
-    :param commands: command names
     :param version: version
     :param root: root package path
 
     Example:
         ----
-        VERSION = '0.1.0'
-        COMMANDS = '''
-        node       Action for nodes
-        stop       Action for stops
-        info       Show information
-        '''
-
-        docowl.run(cli="gtfs", commands=COMMANDS, version=VERSION, root='gtfsandbox')
+        docowl.run(cli="gtfs", version=VERSION, root='gtfsandbox')
         ----
     """
     # Remove <args> to avoid parse errors.
-    doc = _DOC_TMPL_.format(cli=cli, commands='\n'.join([f'  {x}' for x in commands.strip().split('\n')]))
+    root_dir = os.path.abspath(f"{os.path.dirname(__file__)}/../{root}")
+    commands = [f'  {x}          {first_line_in_doc(import_module(root+".commands."+x+".main"))}'
+                for x
+                in os.listdir(f'{root_dir}/commands')
+                if os.path.isdir(f'{root_dir}/commands/{x}')]
+
+    doc = _DOC_TMPL_.format(cli=cli, commands='\n'.join(commands))
     main_args = docopt(doc, argv=sys.argv[1:3], version=version, options_first=True)
 
     command: str = main_args.pop('<command>')
@@ -64,28 +67,28 @@ def run(cli: str, commands: str, version: str, root: str):
     subcommand: str = main_args.pop('<subcommand>')
     # Show global docs and abort
     if subcommand in ["-h", "--help", None]:
-        print(cmd_module.__doc__)
+        print(cmd_module.__doc__.format(cli=cli))
         sys.exit(0)
 
     try:
         # Run without subcommand if there are no subcommands
         cmd_module.run(
-            cmd_module.Args.from_dict(docopt(cmd_module.__doc__), restrict=False, force_cast=True)
+            cmd_module.Args.from_dict(docopt(cmd_module.__doc__.format(cli=cli)), restrict=False, force_cast=True)
         )
     except AttributeError:
         # Subcommand exists
         try:
             sub_cmd_module = import_module(f'gtfsandbox.commands.{command}.{subcommand}.main')
             sub_cmd_module.run(
-                sub_cmd_module.Args.from_dict(docopt(sub_cmd_module.__doc__), restrict=False, force_cast=True)
+                sub_cmd_module.Args.from_dict(docopt(sub_cmd_module.__doc__.format(cli=cli)), restrict=False, force_cast=True)
             )
         except AttributeError as e:
             print(e)
             print(subcommand_not_found_format(subcommand, command))
-            print(cmd_module.__doc__)
+            print(cmd_module.__doc__.format(cli=cli))
             sys.exit(1)
         except ModuleNotFoundError as e:
             print(e)
             print(subcommand_not_found_format(subcommand, command))
-            print(cmd_module.__doc__)
+            print(cmd_module.__doc__.format(cli=cli))
             sys.exit(1)

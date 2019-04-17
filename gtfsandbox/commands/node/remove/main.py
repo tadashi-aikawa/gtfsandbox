@@ -1,6 +1,6 @@
 """
 Usage:
-  main.py node remove --type <node_type>
+  {cli} node remove --type <node_type>
 
 Options:
   -t <node_type>, --type <node_type>   Node type to remove.

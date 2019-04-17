@@ -1,7 +1,8 @@
-"""
+"""Action for stops
+
 Usage:
-  main.py node [<subcommand>] [<args>...]
-  main.py node (-h | --help)
+  {cli} node [<subcommand>] [<args>...]
+  {cli} node (-h | --help)
 
 Subcommands:
   new        Create nodes

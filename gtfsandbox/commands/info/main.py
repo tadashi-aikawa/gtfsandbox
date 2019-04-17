@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
-"""
+"""Show information
+
 Usage:
-  main.py info [-v|-vv|-vvv]
+  {cli} info [-v|-vv|-vvv]
 
 Options:
   -v                                   Verbose (`-v` or `-vv` or `-vvv`)

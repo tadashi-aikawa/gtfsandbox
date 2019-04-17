@@ -1,6 +1,6 @@
 """
 Usage:
-  main.py node move <lat> <lon>
+  {cli} node move <lat> <lon>
 
 Options:
   <lat>                                Latitude

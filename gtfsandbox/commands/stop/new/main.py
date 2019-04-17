@@ -2,7 +2,7 @@
 
 """
 Usage:
-  main.py stop new <name>... [-n|--with-nodes]
+  {cli} stop new <name>... [-n|--with-nodes]
 
 Options:
   -n --with-nodes                      Action with nodes

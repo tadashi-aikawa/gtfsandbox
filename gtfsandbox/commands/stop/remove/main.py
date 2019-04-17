@@ -2,7 +2,7 @@
 
 """
 Usage:
-  main.py stop remove <name>... [-n|--with-nodes]
+  {cli} stop remove <name>... [-n|--with-nodes]
 
 Options:
   -n --with-nodes                      Action with nodes

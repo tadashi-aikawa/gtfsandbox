@@ -1,6 +1,6 @@
 """
 Usage:
-  main.py node new <name>...
+  {cli} node new <name>...
 
 Options:
   <name>                               Node name
