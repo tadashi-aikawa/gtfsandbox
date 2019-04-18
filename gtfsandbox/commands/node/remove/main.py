@@ -1,6 +1,8 @@
-"""
+"""Remove nodes
+
 Usage:
   {cli} node remove --type <node_type>
+  {cli} (-h | --help)
 
 Options:
   -t <node_type>, --type <node_type>   Node type to remove.

@@ -57,7 +57,7 @@ def run(cli: str, version: str, root: str):
     """
     # Remove <args> to avoid parse errors.
     root_dir = os.path.abspath(f"{os.path.dirname(__file__)}/../{root}")
-    commands = [f'  {x}          {first_line_in_doc(import_module(root+".commands."+x+".main"))}'
+    commands = [f'  {x:20}{first_line_in_doc(import_module(root+".commands."+x+".main"))}'
                 for x
                 in os.listdir(f'{root_dir}/commands')
                 if os.path.isdir(f'{root_dir}/commands/{x}')]
@@ -77,7 +77,7 @@ def run(cli: str, version: str, root: str):
     # Show global docs and abort
     if subcommand in ["-h", "--help", None]:
         command_dir = os.path.abspath(f"{os.path.dirname(__file__)}/../{root}/commands/{command}")
-        subcommands = [f'  {x}          {first_line_in_doc(import_module(root+".commands."+command+"."+x+".main"))}'
+        subcommands = [f'  {x:20}          {first_line_in_doc(import_module(root+".commands."+command+"."+x+".main"))}'
                        for x
                        in os.listdir(f'{root_dir}/commands/{command}')
                        if os.path.isdir(f'{root_dir}/commands/{command}/{x}')]

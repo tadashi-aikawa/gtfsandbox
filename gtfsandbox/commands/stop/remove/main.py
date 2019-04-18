@@ -4,6 +4,7 @@
 
 Usage:
   {cli} stop remove <name>... [-n|--with-nodes]
+  {cli} (-h | --help)
 
 Options:
   -n --with-nodes                      Action with nodes

@@ -1,6 +1,8 @@
-"""
+"""Create nodes
+
 Usage:
   {cli} node new <name>...
+  {cli} (-h | --help)
 
 Options:
   <name>                               Node name
